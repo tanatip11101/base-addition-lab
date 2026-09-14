@@ -511,11 +511,10 @@
       renderVisualizer(val1, val2, currentBase, sumBase);
     }
 
-// Build Interactive Step-by-Step Visualizer Grid (CORRECTED ALIGNMENT)
+// Build Interactive Step-by-Step Visualizer Grid (FIXED OVERFLOW CARRY ALIGNMENT)
     function renderVisualizer(s1, s2, base, sumBase) {
-      const totalLen = sumBase.length; // ความยาวผลลัพธ์ (6 หลัก)
+      const totalLen = sumBase.length; // ความยาวผลลัพธ์ (8 หลัก)
       
-      // เติม 0 ด้านหน้าให้ความยาวเท่ากับผลลัพธ์
       const pad1 = s1.padStart(totalLen, '0');
       const pad2 = s2.padStart(totalLen, '0');
 
@@ -524,30 +523,30 @@
       let stepsData = [];
 
       let carry = 0;
-      // วนลูปคำนวณจากขวาไปซ้าย (จากหลักหน่วยขึ้นไป)
+      // วนลูปจากขวาไปซ้าย (i = totalLen - 1 ลงมาถึง 0)
       for (let i = totalLen - 1; i >= 0; i--) {
         const d1 = parseInt(pad1[i], base);
         const d2 = parseInt(pad2[i], base);
 
-        const colSum = d1 + d2 + carry;
+        const carryIn = carry; // ตัวทดที่รับมาจากหลักทางขวา
+        const colSum = d1 + d2 + carryIn;
         const digitRes = colSum % base;
         const carryOut = Math.floor(colSum / base);
 
-        carries[i] = carry; // ตัวทดที่รับมาจากหลักขวา
+        carries[i] = carryIn; // บันทึกตัวทดที่เข้ามายังหลัก i ให้ตรงตำแหน่ง
         results[i] = digitRes.toString(base).toUpperCase();
 
-        // เก็บข้อมูลแต่ละขั้นตอน (เรียงจากหลัก 1 ขวาสุด ไปทางซ้าย)
         stepsData.push({
           colIndex: i,
           d1: pad1[i],
           d2: pad2[i],
-          carryIn: carry,
+          carryIn: carryIn,
           colSum: colSum,
           digitRes: digitRes.toString(base).toUpperCase(),
           carryOut: carryOut
         });
 
-        carry = carryOut;
+        carry = carryOut; // ส่งตัวทดไปหลักทางซ้ายในรอบถัดไป
       }
 
       currentStepsData = stepsData;
