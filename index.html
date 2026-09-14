@@ -511,9 +511,11 @@
       renderVisualizer(val1, val2, currentBase, sumBase);
     }
 
-    // Build Interactive Step-by-Step Visualizer Grid (FIXED FULL DIGIT ALIGNMENT)
+// Build Interactive Step-by-Step Visualizer Grid (CORRECTED ALIGNMENT)
     function renderVisualizer(s1, s2, base, sumBase) {
-      const totalLen = sumBase.length; 
+      const totalLen = sumBase.length; // ความยาวผลลัพธ์ (6 หลัก)
+      
+      // เติม 0 ด้านหน้าให้ความยาวเท่ากับผลลัพธ์
       const pad1 = s1.padStart(totalLen, '0');
       const pad2 = s2.padStart(totalLen, '0');
 
@@ -522,6 +524,7 @@
       let stepsData = [];
 
       let carry = 0;
+      // วนลูปคำนวณจากขวาไปซ้าย (จากหลักหน่วยขึ้นไป)
       for (let i = totalLen - 1; i >= 0; i--) {
         const d1 = parseInt(pad1[i], base);
         const d2 = parseInt(pad2[i], base);
@@ -530,10 +533,11 @@
         const digitRes = colSum % base;
         const carryOut = Math.floor(colSum / base);
 
-        carries[i] = carry; 
+        carries[i] = carry; // ตัวทดที่รับมาจากหลักขวา
         results[i] = digitRes.toString(base).toUpperCase();
 
-        stepsData.unshift({
+        // เก็บข้อมูลแต่ละขั้นตอน (เรียงจากหลัก 1 ขวาสุด ไปทางซ้าย)
+        stepsData.push({
           colIndex: i,
           d1: pad1[i],
           d2: pad2[i],
@@ -549,6 +553,45 @@
       currentStepsData = stepsData;
       animStep = 0;
       updateVisualBoardUI(pad1, pad2, carries, results);
+    }
+// Build Interactive Step-by-Step Visualizer Grid (CORRECTED ALIGNMENT)
+    function updateVisualBoardUI(pad1, pad2, carries, results) {
+      const board = document.getElementById('visualBoard');
+      board.innerHTML = '';
+
+      const maxLen = pad1.length;
+
+      // บรรทัดตัวทด
+      let carryRow = `<div class="flex space-x-3 text-indigo-400 text-sm font-bold mb-1"><span class="w-12 text-right text-xs opacity-50">ตัวทด:</span>`;
+      for (let i = 0; i < maxLen; i++) {
+        const c = carries[i] || 0;
+        carryRow += `<span id="c-col-${i}" class="w-8 text-center py-0.5 rounded ${c ? 'bg-indigo-900/60 text-indigo-300' : 'opacity-20'}">${c}</span>`;
+      }
+      carryRow += `</div>`;
+
+      // บรรทัดค่า 1
+      let num1Row = `<div class="flex space-x-3 text-white"><span class="w-12 text-right text-xs opacity-50 text-slate-400">ค่า 1:</span>`;
+      for (let i = 0; i < maxLen; i++) {
+        num1Row += `<span id="n1-col-${i}" class="w-8 text-center border border-slate-800 rounded py-1">${pad1[i]}</span>`;
+      }
+      num1Row += `</div>`;
+
+      // บรรทัดค่า 2
+      let num2Row = `<div class="flex space-x-3 text-white"><span class="w-12 text-right text-xs opacity-50 text-slate-400">+ ค่า 2:</span>`;
+      for (let i = 0; i < maxLen; i++) {
+        num2Row += `<span id="n2-col-${i}" class="w-8 text-center border border-slate-800 rounded py-1">${pad2[i]}</span>`;
+      }
+      num2Row += `</div>`;
+
+      // บรรทัดผลลัพธ์
+      let resRow = `<div class="flex space-x-3 text-indigo-300 font-bold border-t border-indigo-700/50 pt-1 mt-1"><span class="w-12 text-right text-xs opacity-50 text-slate-400">= ผล:</span>`;
+      for (let i = 0; i < maxLen; i++) {
+        resRow += `<span id="r-col-${i}" class="w-8 text-center border border-indigo-900/40 rounded py-1 bg-indigo-950/40">${results[i]}</span>`;
+      }
+      resRow += `</div>`;
+
+      board.innerHTML = carryRow + num1Row + num2Row + resRow;
+      highlightStep(animStep);
     }
 
     function updateVisualBoardUI(pad1, pad2, carries, results) {
