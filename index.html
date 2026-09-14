@@ -1,854 +1,755 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Primary Meta Tags -->
-    <title>Base Addition Lab | ห้องทดลองบวกเลขฐาน & เกมฝึกคิด</title>
-    <meta name="title" content="Base Addition Lab | ห้องทดลองบวกเลขฐาน & เกมฝึกคิด">
-    <meta name="description" content="เครื่องมือคำนวณและเรียนรู้ระบบการบวกเลขฐาน 2, 8, 10 และ 16 พร้อม Visual Animation ทีละหลัก เกมแบบฝึกหัด และตัวแปลงเลขฐาน">
-    <meta name="keywords" content="บวกเลขฐาน, เลขฐานสอง, เลขฐานแปด, เลขฐานสิบหก, Base Addition, Calculator, Binary Addition">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO & Link Preview Meta Tags -->
+  <title>Base Addition Lab | ห้องทดลองบวกเลขฐาน</title>
+  <meta name="title" content="Base Addition Lab | ห้องทดลองบวกเลขฐาน">
+  <meta name="description" content="เครื่องมือคำนวณและเรียนรู้ระบบการบวกเลขฐาน 2, 8, 10 และ 16 พร้อมการจำลองขั้นตอนแบบ Visual Interactive">
 
-    <!-- Open Graph / Facebook / LINE Link Preview -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://base-addition-lab.vercel.app/">
-    <meta property="og:title" content="Base Addition Lab | ห้องทดลองบวกเลขฐาน">
-    <meta property="og:description" content="เรียนรู้และตรวจคำตอบการบวกเลขฐาน 2, 8, 10 และ 16 พร้อมแอนิเมชันแสดงวิธีทำทีละหลักและเกมสนุกๆ">
-    <meta property="og:image" content="https://placehold.co/1200x630/4f46e5/ffffff?text=Base+Addition+Lab+v2">
+  <!-- Open Graph / Facebook / LINE Preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://base-addition-lab.vercel.app/">
+  <meta property="og:title" content="Base Addition Lab | ห้องทดลองบวกเลขฐาน">
+  <meta property="og:description" content="เรียนรู้และตรวจคำตอบการบวกเลขฐาน 2, 8, 10 และ 16 แบบเข้าใจง่าย พร้อมเกมทดสอบความรู้">
 
-    <!-- Twitter Preview -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Base Addition Lab | ห้องทดลองบวกเลขฐาน">
-    <meta property="twitter:description" content="เรียนรู้และตรวจคำตอบการบวกเลขฐาน 2, 8, 10 และ 16 พร้อมแอนิเมชันแสดงวิธีทำ">
-    <meta property="twitter:image" content="https://placehold.co/1200x630/4f46e5/ffffff?text=Base+Addition+Lab+v2">
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#eeeefb',
-                            100: '#d4d5f7',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            900: '#1e1b4b',
-                            950: '#0f0d2b'
-                        }
-                    }
-                }
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f3ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#312e81',
             }
+          }
         }
-    </script>
-    
-    <!-- Google Fonts: Prompt & Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet">
-    
-    <style>
-        body {
-            font-family: 'Prompt', 'Inter', sans-serif;
-        }
-        .font-mono-code {
-            font-family: 'Fira Code', monospace;
-        }
-        .glass-card {
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-        .active-tab {
-            background-color: #4f46e5 !important;
-            color: #ffffff !important;
-            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
-        }
-        .active-mode-tab {
-            border-bottom: 2px solid #6366f1;
-            color: #6366f1;
-            font-weight: 700;
-        }
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
-            50% { box-shadow: 0 0 25px rgba(99, 102, 241, 0.6); }
-        }
-        .pulse-active {
-            animation: pulse-glow 2s infinite;
-        }
-    </style>
+      }
+    }
+  </script>
+  <!-- Google Fonts: Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    body { font-family: 'Prompt', sans-serif; }
+    .font-mono-custom { font-family: 'JetBrains Mono', monospace; }
+    .glass {
+      background: rgba(30, 27, 75, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(0.98); }
+    }
+    .active-column {
+      animation: pulse-subtle 1.5s infinite ease-in-out;
+      border-color: #818cf8 !important;
+      background-color: rgba(99, 102, 241, 0.25) !important;
+    }
+  </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen antialiased flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
 
-    <!-- Header Navigation Bar -->
-    <header class="w-full bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 border-b border-indigo-900/50 px-4 py-3">
-        <div class="max-w-4xl mx-auto flex items-center justify-between">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('calc')">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white flex items-center justify-center font-bold text-xl shadow-lg shadow-indigo-500/30">
-                    +
-                </div>
-                <div>
-                    <span class="font-bold text-white text-base sm:text-lg tracking-tight block leading-none">Base Addition Lab</span>
-                    <span class="text-[10px] text-indigo-400 font-medium tracking-wide">ห้องทดลองบวกเลขฐาน v2.0</span>
-                </div>
-            </div>
-
-            <div class="flex items-center space-x-2">
-                <button onclick="toggleAudio()" id="audio-btn" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/60 transition text-xs flex items-center space-x-1" title="เปิด/ปิด เสียงเอฟเฟกต์">
-                    <span id="audio-icon">🔊</span>
-                </button>
-                <button onclick="resetAll()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700/60 transition text-xs font-semibold">
-                    รีเซ็ต
-                </button>
-            </div>
+  <!-- Top Navbar -->
+  <header class="w-full border-b border-indigo-900/40 glass sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-violet-400 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+          <span class="text-xl font-bold font-mono-custom text-white">+</span>
         </div>
-    </header>
-
-    <!-- Main Container -->
-    <main class="max-w-4xl mx-auto px-4 py-6 w-full space-y-6">
-
-        <!-- Mode Switcher Tabs -->
-        <div class="flex border-b border-slate-800 space-x-6 text-sm sm:text-base font-medium">
-            <button id="nav-calc" onclick="switchMode('calc')" class="pb-3 active-mode-tab transition-all flex items-center space-x-2">
-                <span>🧮 เครื่องคำนวณ & Visualizer</span>
-            </button>
-            <button id="nav-game" onclick="switchMode('game')" class="pb-3 text-slate-400 hover:text-slate-200 transition-all flex items-center space-x-2">
-                <span>🎮 เกมฝึกคำนวณ (Quiz)</span>
-            </button>
-            <button id="nav-converter" onclick="switchMode('converter')" class="pb-3 text-slate-400 hover:text-slate-200 transition-all flex items-center space-x-2">
-                <span>🔄 แปลงเลขฐานด่วน</span>
-            </button>
+        <div>
+          <h1 class="font-bold text-lg leading-tight bg-gradient-to-r from-white via-indigo-100 to-indigo-300 bg-clip-text text-transparent">Base Addition Lab</h1>
+          <p class="text-xs text-indigo-300/70">ห้องทดลองบวกเลขฐาน v2.0</p>
         </div>
+      </div>
 
-        <!-- SECTION 1: CALCULATOR & VISUALIZER MODE -->
-        <div id="mode-calc" class="space-y-6">
-            <!-- Hero Description -->
-            <section class="space-y-2">
-                <div class="flex items-center space-x-2">
-                    <span class="text-[11px] font-bold tracking-wider text-indigo-400 uppercase bg-indigo-950/80 border border-indigo-800/60 px-3 py-1 rounded-full">
-                        INTERACTIVE VISUALIZER
-                    </span>
-                </div>
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-white">
-                    เรียนรู้การบวกเลขฐาน <span class="text-indigo-400">แบบเห็นภาพทุกขั้นตอน</span>
-                </h1>
-                <p class="text-slate-400 text-xs sm:text-sm">
-                    กรอกตัวเลข เลือกฐานที่ต้องการ แล้วใช้แอนิเมชันจำลองการบวกเลขทีละหลักแบบขวาไปซ้าย
-                </p>
-            </section>
+      <!-- Nav Action Buttons -->
+      <div class="flex items-center space-x-2">
+        <button onclick="toggleAudio()" id="audioBtn" class="p-2.5 rounded-xl glass hover:bg-indigo-900/50 text-indigo-300 hover:text-white transition" title="เปิด/ปิด เสียง">
+          <svg id="audioIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+        </button>
+        <button onclick="openCreatorsModal()" class="flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-indigo-600/30 border border-indigo-400/30 hover:bg-indigo-600/50 text-indigo-200 hover:text-white transition text-sm font-medium">
+          <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+          <span>ผู้จัดทำ</span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-            <!-- Main Input & Controls -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- Left Column: Inputs -->
-                <div class="lg:col-span-5 bg-slate-800/60 border border-slate-700/60 rounded-3xl p-5 space-y-5 glass-card shadow-xl">
-                    <div class="flex items-center justify-between">
-                        <label class="text-xs font-semibold text-slate-300">เลือกฐานตัวเลข</label>
-                        <span id="base-badge" class="text-xs font-mono font-bold text-indigo-400 bg-indigo-950 px-2.5 py-0.5 rounded-md border border-indigo-800/50">BASE 2</span>
-                    </div>
+  <!-- Main Content Container -->
+  <main class="max-w-5xl mx-auto px-4 py-8 w-full flex-grow space-y-8">
 
-                    <!-- Base Selector Grid -->
-                    <div class="grid grid-cols-4 gap-2 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800">
-                        <button id="tab-2" onclick="selectBase(2)" class="py-2 rounded-xl text-xs font-bold text-slate-400 transition-all active-tab">ฐาน 2</button>
-                        <button id="tab-8" onclick="selectBase(8)" class="py-2 rounded-xl text-xs font-bold text-slate-400 transition-all">ฐาน 8</button>
-                        <button id="tab-10" onclick="selectBase(10)" class="py-2 rounded-xl text-xs font-bold text-slate-400 transition-all">ฐาน 10</button>
-                        <button id="tab-16" onclick="selectBase(16)" class="py-2 rounded-xl text-xs font-bold text-slate-400 transition-all">ฐาน 16</button>
-                    </div>
-
-                    <!-- Number Inputs -->
-                    <div class="space-y-4">
-                        <div class="space-y-1.5">
-                            <label class="text-xs font-medium text-slate-300 flex justify-between">
-                                <span>จำนวนที่ 1</span>
-                                <span id="hint-1" class="text-indigo-400 text-[11px]">(0-1)</span>
-                            </label>
-                            <input type="text" id="num1" value="1011" oninput="onInputChange()"
-                                class="w-full bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-xl px-4 py-2.5 font-mono-code text-lg font-bold text-white uppercase tracking-widest outline-none transition-all">
-                            <p id="error-1" class="text-[11px] text-rose-400 hidden"></p>
-                        </div>
-
-                        <div class="space-y-1.5">
-                            <label class="text-xs font-medium text-slate-300 flex justify-between">
-                                <span>จำนวนที่ 2</span>
-                                <span id="hint-2" class="text-indigo-400 text-[11px]">(0-1)</span>
-                            </label>
-                            <input type="text" id="num2" value="1101" oninput="onInputChange()"
-                                class="w-full bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-xl px-4 py-2.5 font-mono-code text-lg font-bold text-white uppercase tracking-widest outline-none transition-all">
-                            <p id="error-2" class="text-[11px] text-rose-400 hidden"></p>
-                        </div>
-                    </div>
-
-                    <!-- Summary Result Card -->
-                    <div class="bg-indigo-950/40 border border-indigo-800/40 rounded-2xl p-4 space-y-1">
-                        <span id="result-label" class="text-xs text-indigo-300 font-semibold block">ผลบวกในฐาน 2</span>
-                        <div class="flex items-baseline space-x-2">
-                            <span id="result-val" class="text-3xl font-extrabold font-mono-code text-indigo-200">11000</span>
-                            <span id="result-sub" class="text-xs font-bold text-indigo-400">(2)</span>
-                        </div>
-                        <p id="result-dec" class="text-xs text-slate-400">เท่ากับ 24 ในฐานสิบ</p>
-                    </div>
-
-                    <!-- Action buttons -->
-                    <div class="flex space-x-2">
-                        <button onclick="copySolution()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-2.5 rounded-xl transition text-xs flex items-center justify-center space-x-1.5">
-                            <span>📋 คัดลอกวิธีทำ</span>
-                        </button>
-                        <button onclick="shareLink()" class="bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 border border-indigo-500/30 px-3 py-2.5 rounded-xl transition text-xs flex items-center justify-center">
-                            <span>🔗 แชร์</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Right Column: Animated Interactive Grid Visualizer -->
-                <div class="lg:col-span-7 bg-slate-800/60 border border-slate-700/60 rounded-3xl p-5 space-y-4 glass-card shadow-xl flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between pb-3 border-b border-slate-700/60">
-                            <div>
-                                <h2 class="text-base font-bold text-white flex items-center space-x-2">
-                                    <span>🎬 ตารางจำลองแอนิเมชันการบวก</span>
-                                </h2>
-                                <p class="text-xs text-slate-400">แสดงการทดและผลลัพธ์ทีละหลัก (จากขวาไปซ้าย)</p>
-                            </div>
-                            <span id="anim-step-badge" class="text-xs font-mono bg-indigo-900/80 text-indigo-300 px-3 py-1 rounded-full border border-indigo-700/50">
-                                ขั้นตอน 0/0
-                            </span>
-                        </div>
-
-                        <!-- Visual Grid Table -->
-                        <div class="py-6 overflow-x-auto">
-                            <div id="visual-grid" class="flex flex-col items-end space-y-2 font-mono-code text-lg sm:text-xl min-w-[280px] justify-center mx-auto">
-                                <!-- Grid cells dynamically generated via JS -->
-                            </div>
-                        </div>
-
-                        <!-- Step Explanation Box -->
-                        <div id="step-desc-box" class="bg-slate-900/90 border border-indigo-900/50 rounded-2xl p-4 min-h-[90px] flex items-center">
-                            <p id="step-desc-text" class="text-xs sm:text-sm text-indigo-200 leading-relaxed">
-                                กดปุ่ม "เล่นอัตโนมัติ" หรือ "ขั้นตอนถัดไป" เพื่อเริ่มดูการบวกเลขทีละตำแหน่ง
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Animation Controls -->
-                    <div class="flex items-center justify-between pt-3 border-t border-slate-700/60 gap-2">
-                        <button onclick="animPrev()" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 rounded-xl text-xs font-semibold text-slate-200 transition">
-                            ◀ ถอยหลัง
-                        </button>
-                        
-                        <button id="anim-play-btn" onclick="togglePlayAnimation()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center space-x-1.5">
-                            <span id="play-icon">▶</span>
-                            <span id="play-text">เล่นอัตโนมัติ</span>
-                        </button>
-
-                        <button onclick="animNext()" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 rounded-xl text-xs font-semibold text-slate-200 transition">
-                            ถัดไป ▶
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 2: PRACTICE GAME MODE (QUIZ) -->
-        <div id="mode-game" class="space-y-6 hidden">
-            <!-- Game Header & Scoreboard -->
-            <div class="bg-gradient-to-r from-indigo-900/80 to-purple-900/80 border border-indigo-700/50 rounded-3xl p-5 text-white flex flex-col sm:flex-row items-center justify-between gap-4 glass-card">
-                <div>
-                    <span class="text-xs font-bold tracking-wider text-indigo-300 uppercase bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-700/40">
-                        QUIZ MODE
-                    </span>
-                    <h2 class="text-2xl font-extrabold mt-2">เกมทดสอบทักษะบวกเลขฐาน</h2>
-                    <p class="text-xs text-indigo-200">ท้าทายความสามารถและสะสมคะแนนต่อเนื่อง (Streak)</p>
-                </div>
-
-                <div class="flex items-center space-x-4 bg-slate-900/80 px-4 py-3 rounded-2xl border border-indigo-800/40 w-full sm:w-auto justify-around">
-                    <div class="text-center">
-                        <span class="text-[10px] text-slate-400 block font-semibold">คะแนนรวม</span>
-                        <span id="game-score" class="text-xl font-bold font-mono-code text-amber-400">0</span>
-                    </div>
-                    <div class="h-8 w-px bg-slate-700"></div>
-                    <div class="text-center">
-                        <span class="text-[10px] text-slate-400 block font-semibold">STREAK 🔥</span>
-                        <span id="game-streak" class="text-xl font-bold font-mono-code text-indigo-400">0</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quiz Card -->
-            <div class="bg-slate-800/60 border border-slate-700/60 rounded-3xl p-6 space-y-6 glass-card shadow-xl max-w-2xl mx-auto">
-                <!-- Level Selector -->
-                <div class="flex justify-between items-center">
-                    <span class="text-xs font-semibold text-slate-400">ระดับความยาก:</span>
-                    <div class="flex space-x-2">
-                        <button onclick="setDifficulty('easy')" id="diff-easy" class="px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white">ง่าย (ฐาน 2)</button>
-                        <button onclick="setDifficulty('medium')" id="diff-medium" class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-700 text-slate-300">ปานกลาง (ฐาน 8)</button>
-                        <button onclick="setDifficulty('hard')" id="diff-hard" class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-700 text-slate-300">ยาก (ฐาน 16)</button>
-                    </div>
-                </div>
-
-                <!-- Problem Statement -->
-                <div class="bg-slate-900/90 rounded-2xl p-6 text-center space-y-3 border border-indigo-900/40">
-                    <span id="quiz-base-tag" class="text-xs font-mono font-bold text-indigo-400 uppercase bg-indigo-950 px-3 py-1 rounded-full border border-indigo-800/40">
-                        คำถามเลขฐาน 2
-                    </span>
-                    <div id="quiz-question" class="text-3xl sm:text-4xl font-extrabold font-mono-code text-white tracking-widest pt-2">
-                        1010 + 0101 = ?
-                    </div>
-                </div>
-
-                <!-- User Answer Input -->
-                <div class="space-y-3">
-                    <input type="text" id="quiz-user-input" placeholder="คำตอบของคุณ..." 
-                        class="w-full bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-2xl px-5 py-3.5 text-center font-mono-code text-xl font-bold text-white uppercase tracking-widest outline-none transition-all">
-                    
-                    <button onclick="submitQuizAnswer()" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold py-3.5 rounded-2xl transition shadow-lg shadow-indigo-600/30">
-                        ส่งคำตอบ 🚀
-                    </button>
-                </div>
-
-                <!-- Game Feedback Banner -->
-                <div id="quiz-feedback" class="hidden rounded-2xl p-4 text-xs sm:text-sm font-medium"></div>
-            </div>
-        </div>
-
-        <!-- SECTION 3: QUICK CONVERTER TOOL -->
-        <div id="mode-converter" class="space-y-6 hidden">
-            <section class="space-y-2">
-                <h2 class="text-2xl font-bold text-white">🔄 เครื่องมือแปลงเลขฐานด่วน</h2>
-                <p class="text-xs sm:text-sm text-slate-400">ป้อนตัวเลขจากฐานใดก็ได้เพื่อแปลงเป็นฐานอื่นๆ ทั้งหมดได้ในทันที</p>
-            </section>
-
-            <div class="bg-slate-800/60 border border-slate-700/60 rounded-3xl p-6 space-y-6 glass-card shadow-xl max-w-2xl mx-auto">
-                <div class="space-y-2">
-                    <label class="text-xs font-semibold text-slate-300">ป้อนตัวเลขต้นทาง</label>
-                    <div class="flex gap-2">
-                        <input type="text" id="conv-input" value="255" oninput="runConverter()" 
-                            class="flex-1 bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-xl px-4 py-2.5 font-mono-code text-lg font-bold text-white uppercase outline-none">
-                        
-                        <select id="conv-base-select" onchange="runConverter()" class="bg-slate-900 border border-slate-700 text-indigo-400 font-bold text-xs rounded-xl px-3 outline-none">
-                            <option value="10">ฐาน 10</option>
-                            <option value="2">ฐาน 2</option>
-                            <option value="8">ฐาน 8</option>
-                            <option value="16">ฐาน 16</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Conversion Output Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                    <div class="bg-slate-900/80 border border-slate-700/60 p-4 rounded-2xl">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">ฐาน 2 (Binary)</span>
-                        <p id="conv-res-2" class="text-lg font-bold font-mono-code text-indigo-300 break-all">11111111</p>
-                    </div>
-                    <div class="bg-slate-900/80 border border-slate-700/60 p-4 rounded-2xl">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">ฐาน 8 (Octal)</span>
-                        <p id="conv-res-8" class="text-lg font-bold font-mono-code text-indigo-300 break-all">377</p>
-                    </div>
-                    <div class="bg-slate-900/80 border border-slate-700/60 p-4 rounded-2xl">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">ฐาน 10 (Decimal)</span>
-                        <p id="conv-res-10" class="text-lg font-bold font-mono-code text-indigo-300 break-all">255</p>
-                    </div>
-                    <div class="bg-slate-900/80 border border-slate-700/60 p-4 rounded-2xl">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">ฐาน 16 (Hexadecimal)</span>
-                        <p id="conv-res-16" class="text-lg font-bold font-mono-code text-indigo-300 break-all">FF</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="text-center text-xs text-slate-500 py-6 border-t border-slate-800/80 mt-12">
-        Base Addition Lab v2.0 · ออกแบบเพื่อการเรียนรู้ระบบคอมพิวเตอร์และดิจิทัล
-    </footer>
-
-    <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-5 right-5 bg-indigo-600 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl transition-all transform translate-y-20 opacity-0 duration-300 z-50">
-        ข้อความการแจ้งเตือน
+    <!-- Mode Switcher Tabs -->
+    <div class="flex justify-center">
+      <div class="glass p-1.5 rounded-2xl flex space-x-2 border border-indigo-500/20">
+        <button id="tabCalc" onclick="switchTab('calc')" class="px-6 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center space-x-2 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+          <span>เครื่องคำนวณ & Visualizer</span>
+        </button>
+        <button id="tabQuiz" onclick="switchTab('quiz')" class="px-6 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center space-x-2 text-indigo-300 hover:text-white hover:bg-indigo-900/30">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+          <span>เกมทบทวนความรู้</span>
+        </button>
+      </div>
     </div>
 
-    <script>
-        // State Variables
-        let currentBase = 2;
-        let animStep = 0;
-        let animMaxSteps = 0;
-        let animInterval = null;
-        let animData = [];
-        let soundEnabled = true;
+    <!-- TAB 1: CALCULATOR & VISUALIZER -->
+    <div id="calcSection" class="space-y-8">
+      
+      <!-- Hero Banner -->
+      <div class="text-center space-y-3 max-w-2xl mx-auto">
+        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 tracking-wider uppercase">Interactive Calculator</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">บวกเลขฐานอย่างเข้าใจ ไม่ใช่แค่จำ</h2>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+          เลือกฐาน กรอกตัวเลข แล้วระบบจะคำนวณและแสดงขั้นตอนการทดทีละหลักแบบภาพเคลื่อนไหวสด รองรับฐาน 2, 8, 10 และ 16
+        </p>
+      </div>
 
-        // Quiz State
-        let quizDifficulty = 'easy';
-        let quizTargetBase = 2;
-        let quizAnswer = '';
-        let score = 0;
-        let streak = 0;
-
-        const baseHints = {
-            2: '(ใช้เลข 0-1)',
-            8: '(ใช้เลข 0-7)',
-            10: '(ใช้เลข 0-9)',
-            16: '(ใช้ 0-9, A-F)'
-        };
-
-        const baseDefaults = {
-            2: { n1: '1011', n2: '1101' },
-            8: { n1: '75', n2: '36' },
-            10: { n1: '25', n2: '78' },
-            16: { n1: '1A', n2: '2F' }
-        };
-
-        // --- WEB AUDIO API SOUND GENERATOR ---
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      <!-- Main Calculator Card -->
+      <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden">
         
-        function playSound(type) {
-            if (!soundEnabled || !audioCtx) return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
+        <!-- Base Selector Buttons -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <label class="text-xs font-semibold uppercase tracking-wider text-indigo-300">1. เลือกระบบเลขฐาน</label>
+            <button onclick="resetCalculator()" class="text-xs text-indigo-400 hover:text-indigo-200 underline transition">รีเซ็ตค่า</button>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <button onclick="setBase(2)" id="btnBase2" class="base-btn py-3 px-4 rounded-2xl border transition flex flex-col items-center border-indigo-500 bg-indigo-600/30 text-white shadow-lg shadow-indigo-600/20">
+              <span class="text-lg font-bold font-mono-custom">2</span>
+              <span class="text-xs text-indigo-200">ฐานสอง (Binary)</span>
+            </button>
+            <button onclick="setBase(8)" id="btnBase8" class="base-btn py-3 px-4 rounded-2xl border transition flex flex-col items-center border-indigo-900/50 bg-slate-900/50 text-slate-400 hover:border-indigo-500/50">
+              <span class="text-lg font-bold font-mono-custom">8</span>
+              <span class="text-xs text-slate-400">ฐานแปด (Octal)</span>
+            </button>
+            <button onclick="setBase(10)" id="btnBase10" class="base-btn py-3 px-4 rounded-2xl border transition flex flex-col items-center border-indigo-900/50 bg-slate-900/50 text-slate-400 hover:border-indigo-500/50">
+              <span class="text-lg font-bold font-mono-custom">10</span>
+              <span class="text-xs text-slate-400">ฐานสิบ (Decimal)</span>
+            </button>
+            <button onclick="setBase(16)" id="btnBase16" class="base-btn py-3 px-4 rounded-2xl border transition flex flex-col items-center border-indigo-900/50 bg-slate-900/50 text-slate-400 hover:border-indigo-500/50">
+              <span class="text-lg font-bold font-mono-custom">16</span>
+              <span class="text-xs text-slate-400">ฐานสิบหก (Hex)</span>
+            </button>
+          </div>
+        </div>
 
-                if (type === 'click') {
-                    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-                    gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 0.05);
-                } else if (type === 'correct') {
-                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
-                    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 0.3);
-                } else if (type === 'wrong') {
-                    osc.frequency.setValueAtTime(180, audioCtx.currentTime);
-                    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 0.2);
-                }
-            } catch (e) { console.error(e); }
+        <!-- Input Fields Grid -->
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <label id="lblNum1" class="text-xs font-semibold text-slate-300">จำนวนที่ 1 (ใช้ 0-1)</label>
+            <input type="text" id="num1" value="1011" oninput="calculate()" placeholder="กรอกตัวเลข..." class="w-full bg-slate-900/80 border border-indigo-900/80 focus:border-indigo-400 rounded-2xl px-4 py-3 text-lg font-mono-custom text-white outline-none transition uppercase tracking-wider">
+            <p id="err1" class="text-xs text-rose-400 hidden">⚠️ ตัวเลขไม่ถูกต้องตามฐานที่เลือก</p>
+          </div>
+          <div class="space-y-2">
+            <label id="lblNum2" class="text-xs font-semibold text-slate-300">จำนวนที่ 2 (ใช้ 0-1)</label>
+            <input type="text" id="num2" value="1101" oninput="calculate()" placeholder="กรอกตัวเลข..." class="w-full bg-slate-900/80 border border-indigo-900/80 focus:border-indigo-400 rounded-2xl px-4 py-3 text-lg font-mono-custom text-white outline-none transition uppercase tracking-wider">
+            <p id="err2" class="text-xs text-rose-400 hidden">⚠️ ตัวเลขไม่ถูกต้องตามฐานที่เลือก</p>
+          </div>
+        </div>
+
+        <!-- Result Box -->
+        <div class="p-5 rounded-2xl bg-gradient-to-br from-indigo-950/80 via-slate-900 to-slate-900 border border-indigo-500/30 space-y-2 relative">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-indigo-300 uppercase tracking-wider" id="resultLabel">ผลบวกในฐาน 2</span>
+            <button onclick="copyResult()" class="text-xs bg-indigo-900/40 hover:bg-indigo-800/60 text-indigo-300 px-3 py-1 rounded-lg border border-indigo-700/40 transition flex items-center space-x-1">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+              <span>คัดลอกผลลัพธ์</span>
+            </button>
+          </div>
+          <div class="flex items-baseline space-x-2">
+            <span id="resultVal" class="text-3xl sm:text-4xl font-extrabold font-mono-custom text-indigo-200 tracking-wider">11000</span>
+            <span id="resultBaseSub" class="text-sm font-semibold text-indigo-400 font-mono-custom">(2)</span>
+          </div>
+          <p id="resultDecEq" class="text-xs text-slate-400">เท่ากับ <span class="font-semibold text-indigo-300">24</span> ในฐานสิบ</p>
+        </div>
+
+        <!-- Visual Step-by-Step Interactive Board -->
+        <div class="space-y-4 pt-4 border-t border-indigo-900/40">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div class="flex items-center space-x-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span>
+              <h3 class="font-semibold text-sm text-indigo-200">Visualizer แสดงการบวกทีละหลัก</h3>
+            </div>
+            <!-- Animation Controls -->
+            <div class="flex items-center space-x-2">
+              <button onclick="stepPrev()" class="px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 text-xs text-slate-200 transition">❮ ก่อนหน้า</button>
+              <button onclick="togglePlay()" id="btnPlay" class="px-4 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white transition shadow-md shadow-indigo-600/30">▶ เล่นแอนิเมชัน</button>
+              <button onclick="stepNext()" class="px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 text-xs text-slate-200 transition">ถัดไป ❯</button>
+            </div>
+          </div>
+
+          <!-- Dynamic Grid Board -->
+          <div class="overflow-x-auto pb-2">
+            <div id="visualBoard" class="min-w-[320px] p-4 rounded-2xl bg-slate-950 border border-indigo-950 flex flex-col items-end space-y-2 font-mono-custom text-lg sm:text-xl">
+              <!-- Rendered dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- Step Explanation Text Banner -->
+          <div id="stepTextBanner" class="p-4 rounded-xl bg-indigo-950/40 border border-indigo-800/40 text-xs sm:text-sm text-indigo-200 leading-relaxed">
+            กดปุ่มเล่นหรือเลื่อนทีละหลักด้านบน เพื่อเริ่มดูขั้นตอนการคำนวณ
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Base Converter -->
+      <div class="glass-card rounded-3xl p-6 space-y-4">
+        <h3 class="text-base font-bold text-white flex items-center space-x-2">
+          <span>⚡ ตัวแปลงเลขฐานด่วน (Single Number Converter)</span>
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+          <div class="space-y-1">
+            <span class="text-xs text-slate-400">ฐาน 2 (Binary)</span>
+            <input type="text" id="conv2" oninput="convertFrom(2)" placeholder="1010" class="w-full bg-slate-950 border border-indigo-900/60 rounded-xl px-3 py-2 text-sm font-mono-custom text-indigo-300">
+          </div>
+          <div class="space-y-1">
+            <span class="text-xs text-slate-400">ฐาน 8 (Octal)</span>
+            <input type="text" id="conv8" oninput="convertFrom(8)" placeholder="12" class="w-full bg-slate-950 border border-indigo-900/60 rounded-xl px-3 py-2 text-sm font-mono-custom text-indigo-300">
+          </div>
+          <div class="space-y-1">
+            <span class="text-xs text-slate-400">ฐาน 10 (Decimal)</span>
+            <input type="text" id="conv10" oninput="convertFrom(10)" placeholder="10" class="w-full bg-slate-950 border border-indigo-900/60 rounded-xl px-3 py-2 text-sm font-mono-custom text-indigo-300">
+          </div>
+          <div class="space-y-1">
+            <span class="text-xs text-slate-400">ฐาน 16 (Hex)</span>
+            <input type="text" id="conv16" oninput="convertFrom(16)" placeholder="A" class="w-full bg-slate-950 border border-indigo-900/60 rounded-xl px-3 py-2 text-sm font-mono-custom text-indigo-300">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 2: PRACTICE QUIZ GAME -->
+    <div id="quizSection" class="space-y-6 hidden">
+      <div class="text-center space-y-2 max-w-xl mx-auto">
+        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Practice Game</span>
+        <h2 class="text-3xl font-extrabold text-white">ทดสอบความรู้การบวกเลขฐาน</h2>
+        <p class="text-slate-400 text-sm">ฝึกแก้โจทย์เพื่อความแม่นยำ สะสมคะแนนและรักษาสถิติตอบถูกต่อเนื่อง!</p>
+      </div>
+
+      <!-- Scoreboard Header -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div class="glass p-4 rounded-2xl text-center border border-indigo-500/20">
+          <span class="text-xs text-slate-400 block">คะแนนรวม</span>
+          <span id="quizScore" class="text-2xl font-bold font-mono-custom text-indigo-300">0</span>
+        </div>
+        <div class="glass p-4 rounded-2xl text-center border border-indigo-500/20">
+          <span class="text-xs text-slate-400 block">ตอบถูกต่อเนื่อง (Streak)</span>
+          <span id="quizStreak" class="text-2xl font-bold font-mono-custom text-amber-400">🔥 0</span>
+        </div>
+        <div class="glass p-4 rounded-2xl text-center border border-indigo-500/20 col-span-2 sm:col-span-1">
+          <span class="text-xs text-slate-400 block">ระดับความยาก</span>
+          <select id="quizDiff" onchange="generateQuizQuestion()" class="bg-transparent font-semibold text-indigo-200 text-sm outline-none cursor-pointer mt-1">
+            <option value="easy" class="bg-slate-900 text-white">ง่าย (ฐาน 2)</option>
+            <option value="medium" class="bg-slate-900 text-white" selected>ปานกลาง (ฐาน 2 & 8)</option>
+            <option value="hard" class="bg-slate-900 text-white">ท้าทาย (ฐาน 8, 10, 16)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Quiz Card -->
+      <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-6 text-center max-w-xl mx-auto shadow-2xl">
+        <div class="space-y-2">
+          <span id="quizBaseBadge" class="px-3 py-1 rounded-full text-xs font-mono-custom bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 inline-block">โจทย์ฐาน 2</span>
+          <div id="quizQuestionBox" class="text-3xl sm:text-4xl font-extrabold font-mono-custom text-white tracking-widest py-4 bg-slate-950/60 rounded-2xl border border-indigo-900/50">
+            101 + 011 = ?
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <input type="text" id="quizAnswerInput" placeholder="พิมพ์คำตอบที่นี่..." class="w-full bg-slate-900 border border-indigo-800 rounded-2xl px-4 py-3 text-center text-xl font-mono-custom text-white outline-none focus:border-indigo-400 uppercase tracking-wider">
+          <div class="flex space-x-3">
+            <button onclick="submitQuizAnswer()" class="flex-1 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/30 transition">ส่งคำตอบ</button>
+            <button onclick="generateQuizQuestion()" class="px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition">ข้ามโจทย์</button>
+          </div>
+        </div>
+
+        <div id="quizFeedback" class="p-4 rounded-xl hidden text-sm font-medium"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- CREATORS / DEVELOPERS MODAL -->
+  <div id="creatorsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+    <div class="glass-card max-w-md w-full rounded-3xl p-6 sm:p-8 space-y-6 border border-indigo-500/40 shadow-2xl transform scale-95 transition-transform duration-300" id="creatorsModalContent">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-indigo-900/50 pb-4">
+        <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 rounded-full bg-indigo-500"></div>
+          <h3 class="text-xl font-bold text-white">ผู้จัดทำโปรเจกต์</h3>
+        </div>
+        <button onclick="closeCreatorsModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white transition">✕</button>
+      </div>
+
+      <!-- Developer Info List -->
+      <div class="space-y-4">
+        
+        <!-- Dev 1 -->
+        <div class="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-800/40 flex items-center space-x-4">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center font-bold text-white text-lg shadow-md">
+            1
+          </div>
+          <div class="space-y-0.5">
+            <h4 class="font-bold text-white text-base">นายธนาธิป เอี่ยมองอาจ</h4>
+            <p class="text-xs text-indigo-300 font-mono-custom">รหัสประจำตัว: 056860405018-3</p>
+          </div>
+        </div>
+
+        <!-- Dev 2 -->
+        <div class="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-800/40 flex items-center space-x-4">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center font-bold text-white text-lg shadow-md">
+            2
+          </div>
+          <div class="space-y-0.5">
+            <h4 class="font-bold text-white text-base">นายธนโชติ นาใจนึก</h4>
+            <p class="text-xs text-indigo-300 font-mono-custom">รหัสประจำตัว: 056860405019-1</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Info -->
+      <div class="text-center pt-2">
+        <p class="text-xs text-slate-400">พัฒนาด้วย Next.js + Tailwind CSS & Web Standard</p>
+        <button onclick="closeCreatorsModal()" class="mt-4 w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm transition">
+          ตกลง / ปิดหน้าต่าง
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Global Footer -->
+  <footer class="w-full border-t border-indigo-950 glass py-4 text-center text-xs text-slate-500">
+    <p>สร้างเพื่อเรียนรู้ระบบเลขฐาน · Next.js + Tailwind CSS</p>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // State Variables
+    let currentBase = 2;
+    let animStep = 0;
+    let animInterval = null;
+    let audioEnabled = true;
+
+    // Quiz State
+    let quizCurrent = { n1: '', n2: '', base: 2, ans: '' };
+    let score = 0;
+    let streak = 0;
+
+    // Web Audio Synthesizer Sound FX
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSound(type) {
+      if (!audioEnabled) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'click') {
+          osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.05);
+        } else if (type === 'correct') {
+          osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+          osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+          gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.25);
+        } else if (type === 'wrong') {
+          osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.2);
         }
+      } catch (e) {}
+    }
 
-        function toggleAudio() {
-            soundEnabled = !soundEnabled;
-            document.getElementById('audio-icon').textContent = soundEnabled ? '🔊' : '🔇';
-            showToast(soundEnabled ? 'เปิดเสียงเอฟเฟกต์แล้ว' : 'ปิดเสียงเอฟเฟกต์แล้ว');
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      document.getElementById('audioBtn').style.opacity = audioEnabled ? '1' : '0.4';
+    }
+
+    // Tab Switching
+    function switchTab(tab) {
+      playSound('click');
+      if (tab === 'calc') {
+        document.getElementById('calcSection').classList.remove('hidden');
+        document.getElementById('quizSection').classList.add('hidden');
+        document.getElementById('tabCalc').className = "px-6 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center space-x-2 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30";
+        document.getElementById('tabQuiz').className = "px-6 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center space-x-2 text-indigo-300 hover:text-white hover:bg-indigo-900/30";
+      } else {
+        document.getElementById('calcSection').classList.add('hidden');
+        document.getElementById('quizSection').classList.remove('hidden');
+        document.getElementById('tabQuiz').className = "px-6 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center space-x-2 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30";
+        document.getElementById('tabCalc').className = "px-6 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center space-x-2 text-indigo-300 hover:text-white hover:bg-indigo-900/30";
+        generateQuizQuestion();
+      }
+    }
+
+    // Modal Handlers
+    function openCreatorsModal() {
+      playSound('click');
+      const modal = document.getElementById('creatorsModal');
+      const content = document.getElementById('creatorsModalContent');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        content.classList.remove('scale-95');
+      }, 10);
+    }
+
+    function closeCreatorsModal() {
+      playSound('click');
+      const modal = document.getElementById('creatorsModal');
+      const content = document.getElementById('creatorsModalContent');
+      modal.classList.add('opacity-0');
+      content.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 300);
+    }
+
+    // Base Selector
+    function setBase(base) {
+      playSound('click');
+      currentBase = base;
+      [2, 8, 10, 16].forEach(b => {
+        const btn = document.getElementById(`btnBase${b}`);
+        if (b === base) {
+          btn.className = "base-btn py-3 px-4 rounded-2xl border transition flex flex-col items-center border-indigo-500 bg-indigo-600/30 text-white shadow-lg shadow-indigo-600/20";
+          btn.querySelector('span:last-child').className = "text-xs text-indigo-200";
+        } else {
+          btn.className = "base-btn py-3 px-4 rounded-2xl border transition flex flex-col items-center border-indigo-900/50 bg-slate-900/50 text-slate-400 hover:border-indigo-500/50";
+          btn.querySelector('span:last-child').className = "text-xs text-slate-400";
         }
+      });
 
-        // --- MODE SWITCHING ---
-        function switchMode(mode) {
-            playSound('click');
-            ['calc', 'game', 'converter'].forEach(m => {
-                document.getElementById(`mode-${m}`).classList.add('hidden');
-                document.getElementById(`nav-${m}`).classList.remove('active-mode-tab');
-                document.getElementById(`nav-${m}`).classList.add('text-slate-400');
-            });
+      const ranges = { 2: '0–1', 8: '0–7', 10: '0–9', 16: '0–9, A–F' };
+      document.getElementById('lblNum1').innerText = `จำนวนที่ 1 (ใช้ ${ranges[base]})`;
+      document.getElementById('lblNum2').innerText = `จำนวนที่ 2 (ใช้ ${ranges[base]})`;
 
-            document.getElementById(`mode-${mode}`).classList.remove('hidden');
-            document.getElementById(`nav-${mode}`).classList.add('active-mode-tab');
-            document.getElementById(`nav-${mode}`).classList.remove('text-slate-400');
+      // Preset sample numbers
+      const presets = {
+        2: ['1011', '1101'],
+        8: ['47', '35'],
+        10: ['89', '43'],
+        16: ['1A', '2F']
+      };
+      document.getElementById('num1').value = presets[base][0];
+      document.getElementById('num2').value = presets[base][1];
 
-            if (mode === 'game' && !quizAnswer) generateQuizProblem();
-            if (mode === 'converter') runConverter();
+      calculate();
+    }
+
+    // Validate Input against Base
+    function isValidInput(val, base) {
+      if (!val) return true;
+      const regexes = {
+        2: /^[0-1]+$/i,
+        8: /^[0-7]+$/i,
+        10: /^[0-9]+$/i,
+        16: /^[0-9a-fA-F]+$/i
+      };
+      return regexes[base].test(val);
+    }
+
+    // Core Calculation & Visualizer Render
+    function calculate() {
+      const val1 = document.getElementById('num1').value.trim().toUpperCase();
+      const val2 = document.getElementById('num2').value.trim().toUpperCase();
+
+      const valid1 = isValidInput(val1, currentBase);
+      const valid2 = isValidInput(val2, currentBase);
+
+      document.getElementById('err1').classList.toggle('hidden', valid1);
+      document.getElementById('err2').classList.toggle('hidden', valid2);
+
+      if (!valid1 || !valid2 || !val1 || !val2) {
+        document.getElementById('resultVal').innerText = '---';
+        return;
+      }
+
+      const dec1 = parseInt(val1, currentBase);
+      const dec2 = parseInt(val2, currentBase);
+      const sumDec = dec1 + dec2;
+      const sumBase = sumDec.toString(currentBase).toUpperCase();
+
+      document.getElementById('resultLabel').innerText = `ผลบวกในฐาน ${currentBase}`;
+      document.getElementById('resultVal').innerText = sumBase;
+      document.getElementById('resultBaseSub').innerText = `(${currentBase})`;
+      document.getElementById('resultDecEq').innerHTML = `เท่ากับ <span class="font-semibold text-indigo-300">${sumDec}</span> ในฐานสิบ`;
+
+      renderVisualizer(val1, val2, currentBase);
+    }
+
+    // Build Interactive Step-by-Step Visualizer Grid
+    let currentStepsData = [];
+
+    function renderVisualizer(s1, s2, base) {
+      const maxLen = Math.max(s1.length, s2.length);
+      const pad1 = s1.padStart(maxLen, '0');
+      const pad2 = s2.padStart(maxLen, '0');
+
+      let carries = new Array(maxLen + 1).fill(0);
+      let results = [];
+      let stepsData = [];
+
+      for (let i = maxLen - 1; i >= 0; i--) {
+        const d1 = parseInt(pad1[i], base);
+        const d2 = parseInt(pad2[i], base);
+        const carryIn = carries[i + 1];
+
+        const colSum = d1 + d2 + carryIn;
+        const digitRes = colSum % base;
+        const carryOut = Math.floor(colSum / base);
+
+        carries[i] = carryOut;
+        results.unshift(digitRes.toString(base).toUpperCase());
+
+        stepsData.unshift({
+          colIndex: i,
+          d1: pad1[i],
+          d2: pad2[i],
+          carryIn: carryIn,
+          colSum: colSum,
+          digitRes: digitRes.toString(base).toUpperCase(),
+          carryOut: carryOut
+        });
+      }
+
+      if (carries[0] > 0) {
+        results.unshift(carries[0].toString(base).toUpperCase());
+      }
+
+      currentStepsData = stepsData;
+      animStep = 0;
+      updateVisualBoardUI(pad1, pad2, carries, results);
+    }
+
+    function updateVisualBoardUI(pad1, pad2, carries, results) {
+      const board = document.getElementById('visualBoard');
+      board.innerHTML = '';
+
+      const maxLen = pad1.length;
+
+      // Rows
+      let carryRow = `<div class="flex space-x-3 text-indigo-400 text-sm font-bold mb-1"><span class="w-8 text-right text-xs opacity-50">ตัวทด:</span>`;
+      for (let i = 0; i < maxLen; i++) {
+        const c = carries[i + 1] || 0;
+        carryRow += `<span id="c-col-${i}" class="w-8 text-center py-0.5 rounded ${c ? 'bg-indigo-900/60 text-indigo-300' : 'opacity-20'}">${c}</span>`;
+      }
+      carryRow += `</div>`;
+
+      let num1Row = `<div class="flex space-x-3 text-white"><span class="w-8 text-right text-xs opacity-50 text-slate-400">ค่า 1:</span>`;
+      for (let i = 0; i < maxLen; i++) {
+        num1Row += `<span id="n1-col-${i}" class="w-8 text-center border border-slate-800 rounded py-1">${pad1[i]}</span>`;
+      }
+      num1Row += `</div>`;
+
+      let num2Row = `<div class="flex space-x-3 text-white"><span class="w-8 text-right text-xs opacity-50 text-slate-400">+ ค่า 2:</span>`;
+      for (let i = 0; i < maxLen; i++) {
+        num2Row += `<span id="n2-col-${i}" class="w-8 text-center border border-slate-800 rounded py-1">${pad2[i]}</span>`;
+      }
+      num2Row += `</div>`;
+
+      let resRow = `<div class="flex space-x-3 text-indigo-300 font-bold border-t border-indigo-700/50 pt-1 mt-1"><span class="w-8 text-right text-xs opacity-50 text-slate-400">= ผล:</span>`;
+      for (let i = 0; i < maxLen; i++) {
+        resRow += `<span id="r-col-${i}" class="w-8 text-center border border-indigo-900/40 rounded py-1 bg-indigo-950/40">${results[i] || '?'}</span>`;
+      }
+      resRow += `</div>`;
+
+      board.innerHTML = carryRow + num1Row + num2Row + resRow;
+      highlightStep(animStep);
+    }
+
+    function highlightStep(stepIdx) {
+      const maxLen = currentStepsData.length;
+      if (maxLen === 0) return;
+
+      for (let i = 0; i < maxLen; i++) {
+        const el1 = document.getElementById(`n1-col-${i}`);
+        const el2 = document.getElementById(`n2-col-${i}`);
+        const elR = document.getElementById(`r-col-${i}`);
+        if (el1) el1.classList.remove('active-column');
+        if (el2) el2.classList.remove('active-column');
+        if (elR) elR.classList.remove('active-column');
+      }
+
+      const activeIdx = maxLen - 1 - stepIdx;
+      if (activeIdx >= 0 && activeIdx < maxLen) {
+        const el1 = document.getElementById(`n1-col-${activeIdx}`);
+        const el2 = document.getElementById(`n2-col-${activeIdx}`);
+        const elR = document.getElementById(`r-col-${activeIdx}`);
+        if (el1) el1.classList.add('active-column');
+        if (el2) el2.classList.add('active-column');
+        if (elR) elR.classList.add('active-column');
+
+        const step = currentStepsData[stepIdx];
+        document.getElementById('stepTextBanner').innerHTML = `
+          <strong>หลักที่ ${stepIdx + 1} (จากขวาไปซ้าย):</strong> คำนวณ <span class="text-indigo-300 font-mono-custom">${step.d1}</span> + <span class="text-indigo-300 font-mono-custom">${step.d2}</span> 
+          ${step.carryIn ? `+ ตัวทด <span class="text-amber-300 font-mono-custom">${step.carryIn}</span>` : ''} 
+          = <span class="text-indigo-200 font-bold font-mono-custom">${step.colSum}</span> (ฐาน 10)<br>
+          👉 ใส่ผลลัพธ์หลักนี้ = <span class="text-emerald-400 font-bold font-mono-custom">${step.digitRes}</span> 
+          ${step.carryOut ? `และทดไปหลักถัดไป = <span class="text-amber-400 font-bold font-mono-custom">${step.carryOut}</span>` : ''}
+        `;
+      }
+    }
+
+    function stepNext() {
+      playSound('click');
+      if (animStep < currentStepsData.length - 1) {
+        animStep++;
+        highlightStep(animStep);
+      }
+    }
+
+    function stepPrev() {
+      playSound('click');
+      if (animStep > 0) {
+        animStep--;
+        highlightStep(animStep);
+      }
+    }
+
+    function togglePlay() {
+      playSound('click');
+      const btn = document.getElementById('btnPlay');
+      if (animInterval) {
+        clearInterval(animInterval);
+        animInterval = null;
+        btn.innerText = '▶ เล่นแอนิเมชัน';
+      } else {
+        btn.innerText = '⏸ หยุด';
+        animStep = 0;
+        highlightStep(animStep);
+        animInterval = setInterval(() => {
+          if (animStep < currentStepsData.length - 1) {
+            animStep++;
+            highlightStep(animStep);
+          } else {
+            clearInterval(animInterval);
+            animInterval = null;
+            btn.innerText = '▶ เล่นแอนิเมชัน';
+          }
+        }, 1500);
+      }
+    }
+
+    function resetCalculator() {
+      playSound('click');
+      setBase(2);
+    }
+
+    // Quick Converter Logic
+    function convertFrom(srcBase) {
+      const srcVal = document.getElementById(`conv${srcBase}`).value.trim().toUpperCase();
+      if (!srcVal || !isValidInput(srcVal, srcBase)) {
+        [2, 8, 10, 16].forEach(b => {
+          if (b !== srcBase) document.getElementById(`conv${b}`).value = '';
+        });
+        return;
+      }
+      const dec = parseInt(srcVal, srcBase);
+      [2, 8, 10, 16].forEach(b => {
+        if (b !== srcBase) {
+          document.getElementById(`conv${b}`).value = dec.toString(b).toUpperCase();
         }
+      });
+    }
 
-        // --- CALCULATOR & VISUALIZER LOGIC ---
-        function selectBase(base) {
-            playSound('click');
-            currentBase = base;
-            [2, 8, 10, 16].forEach(b => {
-                const tab = document.getElementById(`tab-${b}`);
-                if (b === base) tab.classList.add('active-tab');
-                else tab.classList.remove('active-tab');
-            });
+    // Copy Result Clipboard
+    function copyResult() {
+      const resVal = document.getElementById('resultVal').innerText;
+      const text = `ผลบวกเลขฐาน ${currentBase}: ${document.getElementById('num1').value} + ${document.getElementById('num2').value} = ${resVal} (${currentBase})`;
+      navigator.clipboard.writeText(text);
+      playSound('correct');
+      alert('คัดลอกผลลัพธ์ไปยัง Clipboard เรียบร้อยแล้ว!');
+    }
 
-            document.getElementById('base-badge').textContent = `BASE ${base}`;
-            document.getElementById('hint-1').textContent = baseHints[base];
-            document.getElementById('hint-2').textContent = baseHints[base];
-            document.getElementById('result-label').textContent = `ผลบวกในฐาน ${base}`;
-            document.getElementById('result-sub').textContent = `(${base})`;
+    // Quiz Game Logic
+    function generateQuizQuestion() {
+      const diff = document.getElementById('quizDiff').value;
+      let basePool = [2];
+      if (diff === 'medium') basePool = [2, 8];
+      if (diff === 'hard') basePool = [8, 10, 16];
 
-            document.getElementById('num1').value = baseDefaults[base].n1;
-            document.getElementById('num2').value = baseDefaults[base].n2;
+      const base = basePool[Math.floor(Math.random() * basePool.length)];
+      const maxVal = diff === 'easy' ? 15 : (diff === 'medium' ? 63 : 255);
 
-            onInputChange();
-        }
+      const n1Dec = Math.floor(Math.random() * maxVal) + 1;
+      const n2Dec = Math.floor(Math.random() * maxVal) + 1;
 
-        function validateInput(val, base) {
-            if (!val) return true;
-            let regex;
-            switch(base) {
-                case 2: regex = /^[0-1]+$/; break;
-                case 8: regex = /^[0-7]+$/; break;
-                case 10: regex = /^[0-9]+$/; break;
-                case 16: regex = /^[0-9a-fA-F]+$/; break;
-            }
-            return regex.test(val);
-        }
+      const n1Str = n1Dec.toString(base).toUpperCase();
+      const n2Str = n2Dec.toString(base).toUpperCase();
+      const ansStr = (n1Dec + n2Dec).toString(base).toUpperCase();
 
-        function onInputChange() {
-            stopAnimation();
-            const input1 = document.getElementById('num1').value.trim().toUpperCase();
-            const input2 = document.getElementById('num2').value.trim().toUpperCase();
+      quizCurrent = { n1: n1Str, n2: n2Str, base: base, ans: ansStr };
 
-            const err1 = document.getElementById('error-1');
-            const err2 = document.getElementById('error-2');
+      document.getElementById('quizBaseBadge').innerText = `โจทย์เลขฐาน ${base}`;
+      document.getElementById('quizQuestionBox').innerText = `${n1Str} + ${n2Str} = ?`;
+      document.getElementById('quizAnswerInput').value = '';
+      document.getElementById('quizFeedback').className = 'p-4 rounded-xl hidden text-sm font-medium';
+    }
 
-            let isValid = true;
-            if (!validateInput(input1, currentBase)) {
-                err1.textContent = `ระบุเฉพาะเลขฐาน ${currentBase}`;
-                err1.classList.remove('hidden');
-                isValid = false;
-            } else err1.classList.add('hidden');
+    function submitQuizAnswer() {
+      const userAns = document.getElementById('quizAnswerInput').value.trim().toUpperCase();
+      const feedback = document.getElementById('quizFeedback');
+      feedback.classList.remove('hidden');
 
-            if (!validateInput(input2, currentBase)) {
-                err2.textContent = `ระบุเฉพาะเลขฐาน ${currentBase}`;
-                err2.classList.remove('hidden');
-                isValid = false;
-            } else err2.classList.add('hidden');
+      if (userAns === quizCurrent.ans) {
+        playSound('correct');
+        score += 10;
+        streak += 1;
+        feedback.className = 'p-4 rounded-xl text-sm font-medium bg-emerald-950/60 border border-emerald-500/40 text-emerald-300';
+        feedback.innerText = '🎉 ถูกต้องเก่งมาก! (+10 คะแนน)';
+        setTimeout(() => generateQuizQuestion(), 1200);
+      } else {
+        playSound('wrong');
+        streak = 0;
+        feedback.className = 'p-4 rounded-xl text-sm font-medium bg-rose-950/60 border border-rose-500/40 text-rose-300';
+        feedback.innerText = `❌ ยังไม่ถูกต้อง (คำตอบที่ถูกคือ: ${quizCurrent.ans} ในฐาน ${quizCurrent.base})`;
+      }
 
-            if (!isValid || !input1 || !input2) {
-                document.getElementById('result-val').textContent = '—';
-                document.getElementById('result-dec').textContent = 'โปรดตรวจสอบข้อมูลตัวเลข';
-                return;
-            }
+      document.getElementById('quizScore').innerText = score;
+      document.getElementById('quizStreak').innerText = `🔥 ${streak}`;
+    }
 
-            const val1 = parseInt(input1, currentBase);
-            const val2 = parseInt(input2, currentBase);
-            const sumDecimal = val1 + val2;
-            const sumResult = sumDecimal.toString(currentBase).toUpperCase();
-
-            document.getElementById('result-val').textContent = sumResult;
-            document.getElementById('result-dec').textContent = `เท่ากับ ${sumDecimal.toLocaleString()} ในฐานสิบ`;
-
-            buildAnimationData(input1, input2, currentBase);
-        }
-
-        // --- ANIMATION ENGINE ---
-        function buildAnimationData(str1, str2, base) {
-            const maxLen = Math.max(str1.length, str2.length);
-            const s1 = str1.padStart(maxLen, '0');
-            const s2 = str2.padStart(maxLen, '0');
-
-            animData = [];
-            let carry = 0;
-
-            for (let i = maxLen - 1; i >= 0; i--) {
-                const d1 = parseInt(s1[i], base);
-                const d2 = parseInt(s2[i], base);
-                const sum = d1 + d2 + carry;
-                const outDigit = (sum % base).toString(base).toUpperCase();
-                const nextCarry = Math.floor(sum / base);
-
-                animData.push({
-                    colIndex: i,
-                    d1: s1[i],
-                    d2: s2[i],
-                    carryIn: carry,
-                    sum: sum,
-                    outDigit: outDigit,
-                    carryOut: nextCarry
-                });
-
-                carry = nextCarry;
-            }
-
-            if (carry > 0) {
-                animData.push({
-                    colIndex: -1,
-                    d1: '0',
-                    d2: '0',
-                    carryIn: carry,
-                    sum: carry,
-                    outDigit: carry.toString(base).toUpperCase(),
-                    carryOut: 0,
-                    isFinalCarry: true
-                });
-            }
-
-            animMaxSteps = animData.length;
-            animStep = 0;
-            renderVisualGrid();
-        }
-
-        function renderVisualGrid() {
-            const grid = document.getElementById('visual-grid');
-            const descText = document.getElementById('step-desc-text');
-            const badge = document.getElementById('anim-step-badge');
-
-            badge.textContent = `ขั้นตอน ${animStep}/${animMaxSteps}`;
-
-            if (animStep === 0) {
-                descText.textContent = "กดปุ่ม 'ขั้นตอนถัดไป' หรือ 'เล่นอัตโนมัติ' เพื่อเริ่มคำนวณทีละหลัก";
-            } else {
-                const step = animData[animStep - 1];
-                if (step.isFinalCarry) {
-                    descText.innerHTML = `ดึงตัวทดสุดท้ายลงมาใส่ด้านหน้าสุด: <strong class="text-amber-400">${step.outDigit}</strong>`;
-                } else {
-                    descText.innerHTML = `
-                        หลักที่ ${animStep}: <strong>${step.d1} + ${step.d2}</strong> ${step.carryIn > 0 ? `+ (ตัวทด ${step.carryIn})` : ''} 
-                        = <strong class="text-indigo-300">${step.sum}</strong> (ฐาน 10)<br>
-                        ➔ ผลลัพธ์ในหลักนี้ใส่ <strong class="text-emerald-400">${step.outDigit}</strong> 
-                        ${step.carryOut > 0 ? `พร้อมส่งตัวทด <strong class="text-amber-400">${step.carryOut}</strong> ไปหลักถัดไป` : ''}
-                    `;
-                }
-            }
-
-            // Generate HTML table columns
-            const input1 = document.getElementById('num1').value.trim().toUpperCase();
-            const input2 = document.getElementById('num2').value.trim().toUpperCase();
-            const maxLen = Math.max(input1.length, input2.length);
-            const s1 = input1.padStart(maxLen, '0');
-            const s2 = input2.padStart(maxLen, '0');
-
-            let carryRow = `<div class="text-amber-400 text-xs text-center font-bold">ทด:</div>`;
-            let n1Row = `<div class="text-slate-400 text-xs text-center">ค่า 1:</div>`;
-            let n2Row = `<div class="text-indigo-400 text-xs font-bold text-center">+</div>`;
-            let resRow = `<div class="text-emerald-400 text-xs text-center font-bold">ผล:</div>`;
-
-            // Final carry column space if needed
-            const hasExtraCarry = animData.some(d => d.isFinalCarry);
-            const totalCols = maxLen + (hasExtraCarry ? 1 : 0);
-
-            for (let c = 0; c < totalCols; c++) {
-                const colFromRight = totalCols - 1 - c;
-                const isCurrentStep = (animStep > 0 && colFromRight === animStep - 1);
-                const isPastStep = (colFromRight < animStep);
-
-                let cellHighlight = isCurrentStep ? 'bg-indigo-600/40 text-white font-extrabold ring-2 ring-indigo-500' : 'bg-slate-900/60';
-
-                // Carry value
-                let carryVal = ' ';
-                if (colFromRight < animData.length) {
-                    const dData = animData[colFromRight];
-                    if (isPastStep || isCurrentStep) {
-                        carryVal = dData.carryIn > 0 ? dData.carryIn : ' ';
-                    }
-                }
-
-                // Digits
-                let d1Val = '0';
-                let d2Val = '0';
-                const s1Idx = maxLen - 1 - (colFromRight - (hasExtraCarry ? 0 : 0));
-                if (s1Idx >= 0 && s1Idx < maxLen) {
-                    d1Val = s1[s1Idx];
-                    d2Val = s2[s1Idx];
-                } else {
-                    d1Val = ' ';
-                    d2Val = ' ';
-                }
-
-                // Result digit
-                let resVal = ' ';
-                if (isPastStep) {
-                    resVal = animData[colFromRight].outDigit;
-                }
-
-                carryRow += `<div class="w-8 h-7 flex items-center justify-center rounded-lg text-amber-400 font-bold ${cellHighlight}">${carryVal}</div>`;
-                n1Row += `<div class="w-8 h-8 flex items-center justify-center rounded-lg ${cellHighlight}">${d1Val}</div>`;
-                n2Row += `<div class="w-8 h-8 flex items-center justify-center rounded-lg ${cellHighlight}">${d2Val}</div>`;
-                resRow += `<div class="w-8 h-8 flex items-center justify-center rounded-lg text-emerald-300 font-bold ${cellHighlight}">${resVal}</div>`;
-            }
-
-            grid.innerHTML = `
-                <div class="flex space-x-1 border-b border-slate-700/60 pb-1">${carryRow}</div>
-                <div class="flex space-x-1">${n1Row}</div>
-                <div class="flex space-x-1 border-b-2 border-indigo-500/80 pb-1">${n2Row}</div>
-                <div class="flex space-x-1 pt-1">${resRow}</div>
-            `;
-        }
-
-        function animNext() {
-            playSound('click');
-            if (animStep < animMaxSteps) {
-                animStep++;
-                renderVisualGrid();
-            } else {
-                stopAnimation();
-            }
-        }
-
-        function animPrev() {
-            playSound('click');
-            if (animStep > 0) {
-                animStep--;
-                renderVisualGrid();
-            }
-        }
-
-        function togglePlayAnimation() {
-            if (animInterval) {
-                stopAnimation();
-            } else {
-                playSound('click');
-                if (animStep >= animMaxSteps) animStep = 0;
-                document.getElementById('play-text').textContent = 'หยุด';
-                document.getElementById('play-icon').textContent = '⏸';
-                animInterval = setInterval(() => {
-                    if (animStep < animMaxSteps) {
-                        animStep++;
-                        renderVisualGrid();
-                    } else {
-                        stopAnimation();
-                    }
-                }, 1200);
-            }
-        }
-
-        function stopAnimation() {
-            if (animInterval) {
-                clearInterval(animInterval);
-                animInterval = null;
-            }
-            document.getElementById('play-text').textContent = 'เล่นอัตโนมัติ';
-            document.getElementById('play-icon').textContent = '▶';
-        }
-
-        // --- QUIZ GAME ENGINE ---
-        function setDifficulty(diff) {
-            playSound('click');
-            quizDifficulty = diff;
-            ['easy', 'medium', 'hard'].forEach(d => {
-                const btn = document.getElementById(`diff-${d}`);
-                if (d === diff) {
-                    btn.classList.add('bg-indigo-600', 'text-white');
-                    btn.classList.remove('bg-slate-700', 'text-slate-300');
-                } else {
-                    btn.classList.remove('bg-indigo-600', 'text-white');
-                    btn.classList.add('bg-slate-700', 'text-slate-300');
-                }
-            });
-            generateQuizProblem();
-        }
-
-        function generateQuizProblem() {
-            let base = 2;
-            let maxVal = 15;
-
-            if (quizDifficulty === 'easy') { base = 2; maxVal = 15; }
-            else if (quizDifficulty === 'medium') { base = 8; maxVal = 63; }
-            else if (quizDifficulty === 'hard') { base = 16; maxVal = 255; }
-
-            quizTargetBase = base;
-            const n1 = Math.floor(Math.random() * maxVal) + 1;
-            const n2 = Math.floor(Math.random() * maxVal) + 1;
-
-            const n1Str = n1.toString(base).toUpperCase();
-            const n2Str = n2.toString(base).toUpperCase();
-            quizAnswer = (n1 + n2).toString(base).toUpperCase();
-
-            document.getElementById('quiz-base-tag').textContent = `คำถามเลขฐาน ${base}`;
-            document.getElementById('quiz-question').textContent = `${n1Str} + ${n2Str} = ?`;
-            document.getElementById('quiz-user-input').value = '';
-            document.getElementById('quiz-feedback').classList.add('hidden');
-        }
-
-        function submitQuizAnswer() {
-            const userVal = document.getElementById('quiz-user-input').value.trim().toUpperCase();
-            const feedback = document.getElementById('quiz-feedback');
-
-            if (!userVal) return;
-
-            if (userVal === quizAnswer) {
-                playSound('correct');
-                score += 10 + (streak * 2);
-                streak++;
-                feedback.className = 'rounded-2xl p-4 text-xs sm:text-sm font-medium bg-emerald-950/80 text-emerald-300 border border-emerald-700/60 block';
-                feedback.innerHTML = `🎉 ถูกต้อง! (${quizAnswer}) รับคะแนน +${10 + (streak * 2)}`;
-                setTimeout(generateQuizProblem, 1500);
-            } else {
-                playSound('wrong');
-                streak = 0;
-                feedback.className = 'rounded-2xl p-4 text-xs sm:text-sm font-medium bg-rose-950/80 text-rose-300 border border-rose-700/60 block';
-                feedback.innerHTML = `❌ ยังไม่ถูกต้อง คำตอบที่ถูกคือ <strong>${quizAnswer}</strong>`;
-            }
-
-            document.getElementById('game-score').textContent = score;
-            document.getElementById('game-streak').textContent = streak;
-        }
-
-        // --- CONVERTER ENGINE ---
-        function runConverter() {
-            const valStr = document.getElementById('conv-input').value.trim().toUpperCase();
-            const fromBase = parseInt(document.getElementById('conv-base-select').value);
-
-            if (!valStr || isNaN(parseInt(valStr, fromBase))) {
-                ['2', '8', '10', '16'].forEach(b => document.getElementById(`conv-res-${b}`).textContent = '—');
-                return;
-            }
-
-            const dec = parseInt(valStr, fromBase);
-            document.getElementById('conv-res-2').textContent = dec.toString(2).toUpperCase();
-            document.getElementById('conv-res-8').textContent = dec.toString(8).toUpperCase();
-            document.getElementById('conv-res-10').textContent = dec.toLocaleString();
-            document.getElementById('conv-res-16').textContent = dec.toString(16).toUpperCase();
-        }
-
-        // --- UTILITY TOOLS ---
-        function copySolution() {
-            playSound('click');
-            const n1 = document.getElementById('num1').value;
-            const n2 = document.getElementById('num2').value;
-            const res = document.getElementById('result-val').textContent;
-            
-            let text = `[Base Addition Lab Solution]\n`;
-            text += `การบวกเลขฐาน ${currentBase}: ${n1} + ${n2} = ${res} (Base ${currentBase})\n`;
-            text += `ขั้นตอน:\n`;
-            animData.forEach((d, idx) => {
-                if (!d.isFinalCarry) {
-                    text += `หลักที่ ${idx+1}: ${d.d1} + ${d.d2} (ทด ${d.carryIn}) = ${d.sum} => ใส่ ${d.outDigit} (ทดไป ${d.carryOut})\n`;
-                }
-            });
-
-            const dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = text;
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-
-            showToast('คัดลอกขั้นตอนการคำนวณเรียบร้อยแล้ว');
-        }
-
-        function shareLink() {
-            playSound('click');
-            const dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = window.location.href;
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-
-            showToast('คัดลอกลิงก์เรียบร้อยแล้ว');
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 2500);
-        }
-
-        function resetAll() {
-            playSound('click');
-            selectBase(2);
-            score = 0;
-            streak = 0;
-            document.getElementById('game-score').textContent = '0';
-            document.getElementById('game-streak').textContent = '0';
-            showToast('รีเซ็ตระบบเรียบร้อย');
-        }
-
-        // Init
-        window.onload = function() {
-            selectBase(2);
-        }
+    // Initialize Page
+    window.onload = () => {
+      calculate();
+    };
+  </script>
+</body>
+</html>
     </script>
 </body>
 </html>
