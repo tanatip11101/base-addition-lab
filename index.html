@@ -118,7 +118,7 @@
       <!-- Hero Banner -->
       <div class="text-center space-y-3 max-w-2xl mx-auto">
         <span class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 tracking-wider uppercase">Interactive Calculator</span>
-        <h2 class="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">บวกเลขฐานอย่างเข้าใจ ไม่ใช่แค่จำ</h2>
+        <h2 class="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">เครื่องมือคำนวณเลขฐานสำหรับผู้เรียนและนักพัฒนา</h2>
         <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
           เลือกฐาน กรอกตัวเลข แล้วระบบจะคำนวณและแสดงขั้นตอนการทดทีละหลักแบบภาพเคลื่อนไหวสด รองรับฐาน 2, 8, 10 และ 16
         </p>
@@ -359,6 +359,7 @@
     let quizCurrent = { n1: '', n2: '', base: 2, ans: '' };
     let score = 0;
     let streak = 0;
+    let currentStepsData = [];
 
     // Web Audio Synthesizer Sound FX
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -457,7 +458,6 @@
       document.getElementById('lblNum1').innerText = `จำนวนที่ 1 (ใช้ ${ranges[base]})`;
       document.getElementById('lblNum2').innerText = `จำนวนที่ 2 (ใช้ ${ranges[base]})`;
 
-      // Preset sample numbers
       const presets = {
         2: ['1011', '1101'],
         8: ['47', '35'],
@@ -482,7 +482,7 @@
       return regexes[base].test(val);
     }
 
-    // Core Calculation & Visualizer Render
+    // Core Calculation & Visualizer Render (FIXED FULL OVERFLOW)
     function calculate() {
       const val1 = document.getElementById('num1').value.trim().toUpperCase();
       const val2 = document.getElementById('num2').value.trim().toUpperCase();
@@ -508,46 +508,42 @@
       document.getElementById('resultBaseSub').innerText = `(${currentBase})`;
       document.getElementById('resultDecEq').innerHTML = `เท่ากับ <span class="font-semibold text-indigo-300">${sumDec}</span> ในฐานสิบ`;
 
-      renderVisualizer(val1, val2, currentBase);
+      renderVisualizer(val1, val2, currentBase, sumBase);
     }
 
-    // Build Interactive Step-by-Step Visualizer Grid
-    let currentStepsData = [];
+    // Build Interactive Step-by-Step Visualizer Grid (FIXED FULL DIGIT ALIGNMENT)
+    function renderVisualizer(s1, s2, base, sumBase) {
+      const totalLen = sumBase.length; 
+      const pad1 = s1.padStart(totalLen, '0');
+      const pad2 = s2.padStart(totalLen, '0');
 
-    function renderVisualizer(s1, s2, base) {
-      const maxLen = Math.max(s1.length, s2.length);
-      const pad1 = s1.padStart(maxLen, '0');
-      const pad2 = s2.padStart(maxLen, '0');
-
-      let carries = new Array(maxLen + 1).fill(0);
-      let results = [];
+      let carries = new Array(totalLen).fill(0);
+      let results = new Array(totalLen).fill('0');
       let stepsData = [];
 
-      for (let i = maxLen - 1; i >= 0; i--) {
+      let carry = 0;
+      for (let i = totalLen - 1; i >= 0; i--) {
         const d1 = parseInt(pad1[i], base);
         const d2 = parseInt(pad2[i], base);
-        const carryIn = carries[i + 1];
 
-        const colSum = d1 + d2 + carryIn;
+        const colSum = d1 + d2 + carry;
         const digitRes = colSum % base;
         const carryOut = Math.floor(colSum / base);
 
-        carries[i] = carryOut;
-        results.unshift(digitRes.toString(base).toUpperCase());
+        carries[i] = carry; 
+        results[i] = digitRes.toString(base).toUpperCase();
 
         stepsData.unshift({
           colIndex: i,
           d1: pad1[i],
           d2: pad2[i],
-          carryIn: carryIn,
+          carryIn: carry,
           colSum: colSum,
           digitRes: digitRes.toString(base).toUpperCase(),
           carryOut: carryOut
         });
-      }
 
-      if (carries[0] > 0) {
-        results.unshift(carries[0].toString(base).toUpperCase());
+        carry = carryOut;
       }
 
       currentStepsData = stepsData;
@@ -562,28 +558,28 @@
       const maxLen = pad1.length;
 
       // Rows
-      let carryRow = `<div class="flex space-x-3 text-indigo-400 text-sm font-bold mb-1"><span class="w-8 text-right text-xs opacity-50">ตัวทด:</span>`;
+      let carryRow = `<div class="flex space-x-3 text-indigo-400 text-sm font-bold mb-1"><span class="w-12 text-right text-xs opacity-50">ตัวทด:</span>`;
       for (let i = 0; i < maxLen; i++) {
-        const c = carries[i + 1] || 0;
+        const c = carries[i] || 0;
         carryRow += `<span id="c-col-${i}" class="w-8 text-center py-0.5 rounded ${c ? 'bg-indigo-900/60 text-indigo-300' : 'opacity-20'}">${c}</span>`;
       }
       carryRow += `</div>`;
 
-      let num1Row = `<div class="flex space-x-3 text-white"><span class="w-8 text-right text-xs opacity-50 text-slate-400">ค่า 1:</span>`;
+      let num1Row = `<div class="flex space-x-3 text-white"><span class="w-12 text-right text-xs opacity-50 text-slate-400">ค่า 1:</span>`;
       for (let i = 0; i < maxLen; i++) {
         num1Row += `<span id="n1-col-${i}" class="w-8 text-center border border-slate-800 rounded py-1">${pad1[i]}</span>`;
       }
       num1Row += `</div>`;
 
-      let num2Row = `<div class="flex space-x-3 text-white"><span class="w-8 text-right text-xs opacity-50 text-slate-400">+ ค่า 2:</span>`;
+      let num2Row = `<div class="flex space-x-3 text-white"><span class="w-12 text-right text-xs opacity-50 text-slate-400">+ ค่า 2:</span>`;
       for (let i = 0; i < maxLen; i++) {
         num2Row += `<span id="n2-col-${i}" class="w-8 text-center border border-slate-800 rounded py-1">${pad2[i]}</span>`;
       }
       num2Row += `</div>`;
 
-      let resRow = `<div class="flex space-x-3 text-indigo-300 font-bold border-t border-indigo-700/50 pt-1 mt-1"><span class="w-8 text-right text-xs opacity-50 text-slate-400">= ผล:</span>`;
+      let resRow = `<div class="flex space-x-3 text-indigo-300 font-bold border-t border-indigo-700/50 pt-1 mt-1"><span class="w-12 text-right text-xs opacity-50 text-slate-400">= ผล:</span>`;
       for (let i = 0; i < maxLen; i++) {
-        resRow += `<span id="r-col-${i}" class="w-8 text-center border border-indigo-900/40 rounded py-1 bg-indigo-950/40">${results[i] || '?'}</span>`;
+        resRow += `<span id="r-col-${i}" class="w-8 text-center border border-indigo-900/40 rounded py-1 bg-indigo-950/40">${results[i]}</span>`;
       }
       resRow += `</div>`;
 
@@ -748,8 +744,5 @@
       calculate();
     };
   </script>
-</body>
-</html>
-    </script>
 </body>
 </html>
